@@ -1,11 +1,8 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
-import games from "./routes/games.js";
 
 const app = new Hono();
 const BASE_URL = "/api/v2";
-
-app.route("/games", games);
 
 serve(
   {
@@ -126,8 +123,10 @@ const games: Games[] = [
   },
 ];
 
-app.get(`${BASE_URL_V3}`, (c) => {
+app.get(`${BASE_URL}/games`, (c) => {
   return c.text("API v3 is running");
 });
 
-app;
+app.get(`${BASE_URL}/games/list`, (c) => {
+  return c.json(games);
+});
